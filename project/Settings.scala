@@ -25,13 +25,15 @@ object Settings extends UniversalKeys {
     persistLauncher in Test := false,
     relativeSourceMaps := true,
     libraryDependencies ++= Dependencies.scalajs.value,
-    unmanagedSourceDirectories in Compile += (scalaSource in (Build.shared, Compile)).value
+    unmanagedSourceDirectories in Compile += (scalaSource in(Build.shared, Compile)).value
   ) ++ common
 
   lazy val root = Seq(
-    name := "root",
+    name := "scalaJsPlay",
     scalajsOutputDir := (classDirectory in Compile).value / "public" / "javascripts",
-    compile in Compile <<= (compile in Compile).dependsOn(fastOptJS in(Build.scalajs, Compile)),
+    compile in Compile <<= (compile in Compile)
+      .dependsOn(fastOptJS in(Build.scalajs, Compile))
+      .dependsOn(Tasks.copySourceMaps),
     dist <<= dist dependsOn (fullOptJS in(Build.scalajs, Compile)),
     stage <<= stage dependsOn (fullOptJS in(Build.scalajs, Compile)),
     commands ++= Commands.root
