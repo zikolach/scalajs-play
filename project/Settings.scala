@@ -6,7 +6,7 @@ import scala.scalajs.sbtplugin.ScalaJSPlugin.ScalaJSKeys._
 import scala.scalajs.sbtplugin.ScalaJSPlugin._
 
 object Settings extends UniversalKeys {
-  val frontendOutputDir = Def.settingKey[File]("directory for javascript files output by scalajs")
+  val scalajsOutputDir = Def.settingKey[File]("directory for javascript files output by scalajs")
   val sharedSrcDir = "shared"
 
   lazy val common = Seq(
@@ -19,23 +19,23 @@ object Settings extends UniversalKeys {
     name := "shared"
   ) ++ common
 
-  lazy val frontend = scalaJSSettings ++ Seq(
-    name := "frontend",
+  lazy val scalajs = scalaJSSettings ++ Seq(
+    name := "scalajs",
     persistLauncher := true,
     persistLauncher in Test := false,
     relativeSourceMaps := true,
-    libraryDependencies ++= Dependencies.frontend.value,
+    libraryDependencies ++= Dependencies.scalajs.value,
     unmanagedSourceDirectories in Compile += (scalaSource in (Build.shared, Compile)).value
   ) ++ common
 
   lazy val root = Seq(
     name := "root",
-    frontendOutputDir := (classDirectory in Compile).value / "public" / "javascripts",
-    compile in Compile <<= (compile in Compile).dependsOn(fastOptJS in(Build.frontend, Compile)),
-    dist <<= dist dependsOn (fullOptJS in(Build.frontend, Compile)),
-    stage <<= stage dependsOn (fullOptJS in(Build.frontend, Compile)),
+    scalajsOutputDir := (classDirectory in Compile).value / "public" / "javascripts",
+    compile in Compile <<= (compile in Compile).dependsOn(fastOptJS in(Build.scalajs, Compile)),
+    dist <<= dist dependsOn (fullOptJS in(Build.scalajs, Compile)),
+    stage <<= stage dependsOn (fullOptJS in(Build.scalajs, Compile)),
     commands ++= Commands.root
   ) ++ Seq(packageLauncher, fastOptJS, fullOptJS).map(packageJSKey => {
-    crossTarget in(Build.frontend, Compile, packageJSKey) := frontendOutputDir.value
+    crossTarget in(Build.scalajs, Compile, packageJSKey) := scalajsOutputDir.value
   }) ++ common
 }

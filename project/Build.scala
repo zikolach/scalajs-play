@@ -10,17 +10,17 @@ object Build extends sbt.Build  {
     settings = Settings.shared
   )
 
-  lazy val frontend = Project(
-    id = "frontend",
-    base = file("modules/frontend"),
-    settings = Settings.frontend
+  lazy val scalajs = Project(
+    id = "scalajs",
+    base = file("modules/scalajs"),
+    settings = Settings.scalajs
   ).dependsOn(shared % Provided)
 
   lazy val root = Project(
     id = "scalaJsPlay",
     base = file("."),
     settings = Settings.root
-  ).enablePlugins(PlayScala).dependsOn(shared).aggregate(frontend)
+  ).enablePlugins(PlayScala).dependsOn(shared).aggregate(scalajs)
 
 }
 
