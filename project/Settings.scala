@@ -1,9 +1,8 @@
-import com.typesafe.sbt.packager.universal.UniversalKeys
-import sbt.Keys._
 import sbt._
-
+import sbt.Keys._
 import scala.scalajs.sbtplugin.ScalaJSPlugin.ScalaJSKeys._
 import scala.scalajs.sbtplugin.ScalaJSPlugin._
+import com.typesafe.sbt.packager.universal.UniversalKeys
 
 object Settings extends UniversalKeys {
   val scalajsOutputDir = Def.settingKey[File]("directory for javascript files output by scalajs")

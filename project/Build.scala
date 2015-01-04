@@ -1,7 +1,6 @@
 import play.PlayScala
 import sbt._
 
-
 object Build extends sbt.Build  {
 
   lazy val shared = Project(
