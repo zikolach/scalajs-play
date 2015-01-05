@@ -19,14 +19,14 @@ object Settings extends UniversalKeys {
     name := "shared"
   ) ++ common
 
-  lazy val scalajs = scalaJSSettings ++ utestJsSettings ++ Seq(
+  lazy val scalajs = Seq(
     name := "scalajs",
     persistLauncher := true,
     persistLauncher in Test := false,
     relativeSourceMaps := true,
     libraryDependencies ++= Dependencies.scalajs.value,
     unmanagedSourceDirectories in Compile += (scalaSource in(Build.shared, Compile)).value
-  ) ++ common
+  ) ++ common ++ scalaJSSettings ++ utestJsSettings
 
   lazy val root = Seq(
     name := "scalaJsPlay",
@@ -36,8 +36,9 @@ object Settings extends UniversalKeys {
       .dependsOn(Tasks.copySourceMaps),
     dist <<= dist dependsOn (fullOptJS in(Build.scalajs, Compile)),
     stage <<= stage dependsOn (fullOptJS in(Build.scalajs, Compile)),
-    commands ++= Commands.root
+    commands ++= Commands.root,
+    libraryDependencies ++= Dependencies.root.value
   ) ++ Seq(packageLauncher, fastOptJS, fullOptJS).map(packageJSKey => {
     crossTarget in(Build.scalajs, Compile, packageJSKey) := scalajsOutputDir.value
-  }) ++ common
+  }) ++ common ++ utestJvmSettings
 }
