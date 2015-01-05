@@ -3,6 +3,7 @@ import sbt.Keys._
 import scala.scalajs.sbtplugin.ScalaJSPlugin.ScalaJSKeys._
 import scala.scalajs.sbtplugin.ScalaJSPlugin._
 import com.typesafe.sbt.packager.universal.UniversalKeys
+import utest.jsrunner.Plugin._
 
 object Settings extends UniversalKeys {
   val scalajsOutputDir = Def.settingKey[File]("directory for javascript files output by scalajs")
@@ -18,7 +19,7 @@ object Settings extends UniversalKeys {
     name := "shared"
   ) ++ common
 
-  lazy val scalajs = scalaJSSettings ++ Seq(
+  lazy val scalajs = scalaJSSettings ++ utestJsSettings ++ Seq(
     name := "scalajs",
     persistLauncher := true,
     persistLauncher in Test := false,

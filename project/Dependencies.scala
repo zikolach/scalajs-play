@@ -1,4 +1,4 @@
-import sbt.Def
+import sbt._
 import scala.scalajs.sbtplugin.ScalaJSPlugin._
 
 object Dependencies {
