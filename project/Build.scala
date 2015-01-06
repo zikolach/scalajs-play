@@ -19,7 +19,7 @@ object Build extends sbt.Build  {
     id = "scalaJsPlay",
     base = file("."),
     settings = Settings.root
-  ).enablePlugins(PlayScala).dependsOn(shared).aggregate(scalajs)
+  ).enablePlugins(PlayScala).dependsOn(shared).aggregate(shared, scalajs)
 
 }
 
