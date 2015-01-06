@@ -10,7 +10,7 @@ object CommonTest extends TestSuite {
     }
     'SqrtTest {
       assert(Common.sqrt(1) == 1)
-      assert(Common.sqrt(3) == 8)
+      assert(Common.sqrt(3) == 9)
     }
   }
 }
