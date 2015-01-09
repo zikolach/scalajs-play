@@ -24,13 +24,9 @@ object Settings extends UniversalKeys {
     persistLauncher := true,
     persistLauncher in Test := false,
     relativeSourceMaps := true,
-    libraryDependencies ++= Dependencies.scalajs.value,
+    libraryDependencies ++= Dependencies.scalajs.jar.value,
+    jsDependencies ++= Dependencies.scalajs.js.value,
     unmanagedSourceDirectories in Compile += (scalaSource in(Build.shared, Compile)).value,
-    // it makes the DOM available in Rhino
-    jsDependencies ++= Seq(
-      scala.scalajs.sbtplugin.RuntimeDOM,
-      "org.webjars" % "jquery" % Versions.jQuery / "jquery.js"
-    ),
     skip in packageJSDependencies := false
   ) ++ common
 
