@@ -7,7 +7,6 @@ import utest.jsrunner.Plugin._
 
 object Settings extends UniversalKeys {
   val scalajsOutputDir = Def.settingKey[File]("directory for javascript files output by scalajs")
-//  val sharedSrcDir = "shared"
 
   lazy val common = Seq(
     version := Versions.app,
