@@ -27,7 +27,11 @@ object Settings extends UniversalKeys {
     libraryDependencies ++= Dependencies.scalajs.value,
     unmanagedSourceDirectories in Compile += (scalaSource in(Build.shared, Compile)).value,
     // it makes the DOM available in Rhino
-    jsDependencies += scala.scalajs.sbtplugin.RuntimeDOM
+    jsDependencies ++= Seq(
+      scala.scalajs.sbtplugin.RuntimeDOM,
+      "org.webjars" % "jquery" % Versions.jQuery / "jquery.js"
+    ),
+    skip in packageJSDependencies := false
   ) ++ common
 
   lazy val root = utestJvmSettings ++ Seq(
@@ -40,7 +44,7 @@ object Settings extends UniversalKeys {
     stage <<= stage dependsOn (fullOptJS in(Build.scalajs, Compile)),
     commands ++= Commands.root,
     libraryDependencies ++= Dependencies.root.value
-  ) ++ Seq(packageLauncher, fastOptJS, fullOptJS).map(packageJSKey => {
+  ) ++ Seq(packageLauncher, fastOptJS, fullOptJS, packageJSDependencies).map(packageJSKey => {
     crossTarget in(Build.scalajs, Compile, packageJSKey) := scalajsOutputDir.value
   }) ++ common
 }
