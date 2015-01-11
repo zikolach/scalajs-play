@@ -3,11 +3,30 @@
 # ~~~~
 
 # Home page
-GET        /                             controllers.Application.index()
+GET         /                              @controllers.Application.index()
+#GET         /test                          @controllers.Application.test()
 
 # Scala source map files
-GET        /modules/shared/*path         controllers.SourceMaps.scalaFile(path)
-GET        /modules/scalajs/*path        controllers.SourceMaps.scalaFile(path)
+GET         /modules/shared/*path          controllers.SourceMaps.scalaFile(path)
+GET         /modules/scalajs/*path         controllers.SourceMaps.scalaFile(path)
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file                 controllers.Assets.at(path="/public", file)
+GET         /assets/bootstrap/css/bootstrap.min.css @controllers.Application.bootstrap()
+GET         /assets/*file                  controllers.Assets.at(path="/public", file)
+GET         /webjars/*file                 controllers.WebJarAssets.at(file)
+
+# Login page
+GET         /login                         @securesocial.controllers.LoginPage.login
+GET         /logout                        @securesocial.controllers.LoginPage.logout
+
+# User Registration and password handling
+GET         /signup                        @securesocial.controllers.Registration.startSignUp
+POST        /signup                        @securesocial.controllers.Registration.handleStartSignUp
+GET         /signup/:token                 @securesocial.controllers.Registration.signUp(token)
+POST        /signup/:token                 @securesocial.controllers.Registration.handleSignUp(token)
+GET         /password                      @securesocial.controllers.PasswordChange.page
+POST        /password                      @securesocial.controllers.PasswordChange.handlePasswordChange
+
+# Providers entry points
+GET         /authenticate/:provider        @securesocial.controllers.ProviderController.authenticate(provider)
+POST        /authenticate/:provider        @securesocial.controllers.ProviderController.authenticateByPost(provider)

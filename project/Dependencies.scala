@@ -15,6 +15,11 @@ object Dependencies {
     ))
   }
   val shared = Def.setting(Seq())
-  val root = Def.setting(Seq())
+  val root = Def.setting(Seq(
+    "ws.securesocial" %% "securesocial" % Versions.secureSocial,
+    "com.typesafe.play.plugins" %% "play-plugins-mailer" % Versions.playMailer,
+    "org.webjars" %% "webjars-play" % "2.3.0-2",
+    "org.webjars" % "bootstrap" % "3.3.1"
+  ))
 }
 

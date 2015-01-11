@@ -11,7 +11,13 @@ object Settings extends UniversalKeys {
   lazy val common = Seq(
     version := Versions.app,
     scalaVersion := Versions.scala,
-    libraryDependencies ++= Dependencies.common.value
+    libraryDependencies ++= Dependencies.common.value,
+    scalacOptions ++= Seq(
+      "-deprecation",
+      "-unchecked",
+      "-feature",
+      "-encoding", "utf8"
+    )
   )
 
   lazy val shared = utestJvmSettings ++ Seq(
@@ -38,6 +44,7 @@ object Settings extends UniversalKeys {
     dist <<= dist dependsOn (fullOptJS in(Build.scalajs, Compile)),
     stage <<= stage dependsOn (fullOptJS in(Build.scalajs, Compile)),
     commands ++= Commands.root,
+    resolvers += Resolver.sonatypeRepo("snapshots"),
     libraryDependencies ++= Dependencies.root.value
   ) ++ Seq(packageLauncher, fastOptJS, fullOptJS, packageJSDependencies).map(packageJSKey => {
     crossTarget in(Build.scalajs, Compile, packageJSKey) := scalajsOutputDir.value
